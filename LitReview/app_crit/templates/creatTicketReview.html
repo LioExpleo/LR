@@ -6,12 +6,12 @@
         {% csrf_token %}
         {{ ticket_form.as_p }}
 
-    <h3>Critique template  CreatTicketReview</h3>
+    <h3>Critique</h3>
         <form method="post" enctype="multipart/form-data" id="creat_review">
         {% csrf_token %}
         {{ review_form.as_p }}
 
-        <button type="submit" class="cl_ticketReview_bouton_envoyer" name="name_ticketReview_bouton_envoyer" >CreatTicketReview</button>
+        <button type="submit" class="cl_ticketReview_bouton_envoyer" name="name_ticketReview_bouton_envoyer" >Envoyer</button>
 
 </form>
 {% endblock %}
