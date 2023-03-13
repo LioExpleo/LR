@@ -37,8 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app_crit', # declaration projet à importer
-    'user', # declaration projet à importer
+    'app_crit',
+    'user',
     'widget_tweaks',
     'image_uploader_widget',
 ]
@@ -128,7 +128,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 
-#url par lequel django va chercher les fichiers téléchargés
+# url par lequel django va chercher les fichiers téléchargés
 MEDIA_URL = '/media/'
-#repertoire où django doit sauvegarder les images televersees
+# repertoire où django doit sauvegarder les images televersees
 MEDIA_ROOT = BASE_DIR.joinpath('media/')

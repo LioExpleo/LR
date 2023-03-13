@@ -1,20 +1,7 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-import time
-# Create your views here.
-# importer les modèles
 from .models import Ticket, Review, UserFollows
-from django.contrib.auth.models import User
-
-# importer la classe du formulaire
 from .formulaire import TicketForm, ReviewForm, UserFollowsForm
-
-from django.shortcuts import (
-    render,
-    redirect,
-)
-
-from django.contrib.auth.models import User
 from itertools import chain
 # Pour créer le formulaire, faire l'instanciation sur la classe du formulaire importé ReviewForm
 # indiquer le formulaire sous forme d'un dictionnaire avec {}
@@ -23,71 +10,53 @@ from itertools import chain
 # Définir la classe qui va permettre de générer le formulaire en la faisant dériver de ModelForm
 # et en lui spécifiant le modèle à inclure
 
-def indexTicket(request):
-     form = TicketForm(request.POST or None, request.FILES) #
-     messages = request.user.username
-     obj_recup_01 = request.user.username
 
-     if form.is_valid():
-        # obtenir les donnees, de modele dans le cas précis mais pas obligatoirement,  a partir d'un formulaire
-        # afin de remplir certains champs
-        # dans les donnees formulees du formulaire. Ici, user doit être indiqué car dans le formulaire,
-        # mais il n'est pas dans les champs du formulaire ensuite.
+def indexTicket(request):
+    form = TicketForm(request.POST or None, request.FILES)
+    messages = request.user.username
+    obj_recup_01 = request.user.username
+
+    if form.is_valid():
         donneesFormulaireTicket = form.save(commit=False)
         donneesFormulaireTicket.user = request.user
-        #donneesFormulaireTicket.image = "https://www.bing.com/maps?q=projet+9+d%C3%A9vellopeur+application+python+guithub&FORM=HDRSC4&cp=46.780342%7E-1.402078&lvl=12.1"
         form.save()
         return redirect('posts')
         form = TicketForm()
-     return render(request, 'creatTicket.html', {'form': form, 'messages': messages, 'obj_recup_01': obj_recup_01})
-
-def indexReview(request,id):
-     ticketReview = Ticket.objects.get(id=id)   # obtenir l'enregistrement(objet) du modele Ticket ayant comme id,
-                                                # l'id récupéré dans le html avec request
-                                                # inst_ticket_other_user_whithout_review.id
-
-     form = ReviewForm(request.POST or None)
-     messages = "enregistrement ok"
-     # Recup de tous les Reviews de l'utilisateur connecté
-     reviews_to_my_tickets = Review.objects.filter(ticket__user_id=request.user.id)
-
-    #*************************************
-     if form.is_valid() :
-            review = form.save(commit=False)
-            review.user = request.user
-            review.ticket = ticketReview
-            review.save()
-            return redirect('posts')
-
-     context = {
-         'form': form,
-         'messages': messages,
-         'reviews_to_my_tickets': reviews_to_my_tickets,
-         'ticketReview': ticketReview,
-     }
-     return render(request, 'creatReview.html', context=context )
+    return render(request, 'creatTicket.html', {'form': form, 'messages': messages, 'obj_recup_01': obj_recup_01})
 
 
-        # obtenir les donnees de modele a partir d'un formulaire afin de remplir certains champs
-        # dans les donnees formulees du formulaire. Ici, user doit être indiqué car dans le modèle,
-        # mais il n'est pas dans le formulaire.
-        # donneesFormulaireTicket = form.save(commit=False)
-        #donneesFormulaireTicket.user = request.user
-        #donneesFormulaireTicket.image = "https://www.bing.com/maps?q=projet+9+d%C3%A9vellopeur+application+python+guithub&FORM=HDRSC4&cp=46.780342%7E-1.402078&lvl=12.1"
-        #form.save()
-        #form = TicketForm()
+def indexReview(request, id):
+    ticketReview = Ticket.objects.get(id=id)   # obtenir l'enregistrement(objet) du modele Ticket ayant comme id,
+    form = ReviewForm(request.POST or None)
+    messages = "enregistrement ok"
+# Recup de tous les Reviews de l'utilisateur connecté
+    reviews_to_my_tickets = Review.objects.filter(ticket__user_id=request.user.id)
 
-        #return render(request, 'creatTicketReview.html', {'form': form, 'messages': messages, 'obj_recup_01': obj_recup_01})
+    # *************************************
+    if form.is_valid():
+        review = form.save(commit=False)
+        review.user = request.user
+        review.ticket = ticketReview
+        review.save()
+        return redirect('posts')
+
+    context = {
+        'form': form,
+        'messages': messages,
+        'reviews_to_my_tickets': reviews_to_my_tickets,
+        'ticketReview': ticketReview,
+    }
+    return render(request, 'creatReview.html', context=context)
 
 
 def indexTicketReview(request):
-     review_form = ReviewForm()
-     ticket_form = TicketForm()
-     # si click
-     if request.method == 'POST' or None and "name_ticketReview_bouton_envoyer" in request.POST:
-         ticket_form = TicketForm(request.POST, request.FILES)
-         review_form = ReviewForm(request.POST)
-         if ticket_form.is_valid() and review_form.is_valid():
+    review_form = ReviewForm()
+    ticket_form = TicketForm()
+# si click
+    if request.method == 'POST' or None and "name_ticketReview_bouton_envoyer" in request.POST:
+        ticket_form = TicketForm(request.POST, request.FILES)
+        review_form = ReviewForm(request.POST)
+        if ticket_form.is_valid() and review_form.is_valid():
             ticket = ticket_form.save(commit=False)
             ticket.is_reviewed = True
             ticket.user = request.user
@@ -96,32 +65,34 @@ def indexTicketReview(request):
             review.ticket = ticket
             ticket.save()
             review.save()
-         return redirect('posts')
+        return redirect('posts')
 
-     context = {
-         'ticket_form': ticket_form,
-         'review_form': review_form,
-     }
-     return render (request, 'creatTicketReview.html', context=context)
+    context = {
+        'ticket_form': ticket_form,
+        'review_form': review_form,
+    }
+    return render(request, 'creatTicketReview.html', context=context)
+
 
 @login_required
 def indexUserFollows(request):
-     form = UserFollowsForm(request.POST or None, request.FILES)
-     obj_recup_01 = request.user.username
-     obj_recup_02 = "******************** Aide saisie *******************"
-     boutonVue = 0
-     # abonnement avec click sur bouton "ENVOYER" dans html
-     # si requete est post avec le bouton envoyer
-     if request.method == 'POST' and "name_bouton_envoyer" in request.POST:
-        form = UserFollowsForm(request.POST or None, request.FILES)
+    form = UserFollowsForm(request.POST or None, request.FILES)
+    obj_recup_01 = request.user.username
+    obj_recup_02 = "******************** Aide saisie *******************"
 
-        # obtenir les donnees de forms qui n'ont pas été mises dans le formulaire afin d'y mettre des valeurs
-        # Ici, user doit être indiqué car dans le modèle, et donc dans form issu du modèle
-        # mais il n'est pas dans le formulaire, il faut donc le renseigner avec request.user.
+# abonnement avec click sur bouton "ENVOYER" dans html
+# si requete est post avec le bouton envoyer
+# obtenir les donnees de forms qui n'ont pas été mises dans le formulaire afin d'y mettre des valeurs
+# Ici, user doit être indiqué car dans le modèle, et donc dans form issu du modèle
+# mais il n'est pas dans le formulaire, il faut donc le renseigner avec request.user.
+# if : si l'utilisateur sélectionné pour le suivi est différent de l'utilisateur connecté
+# else: si l'utilisateur sélectionné pour le suivi est l'utilisateur connecté
+    if request.method == 'POST' and "name_bouton_envoyer" in request.POST:
+        form = UserFollowsForm(request.POST or None, request.FILES)
         donneesFormulaire = form.save(commit=False)
         donneesFormulaire.user = request.user
         followedUserSelect = donneesFormulaire.followed_user
-        # si l'utilisateur sélectionné pour le suivi est différent de l'utilisateur connecté
+
         if followedUserSelect != donneesFormulaire.user:
             if form.is_valid():
                 try:
@@ -129,43 +100,35 @@ def indexUserFollows(request):
                     form = UserFollowsForm()
                     obj_recup_02 = " " + str(donneesFormulaire.followed_user) + \
                                    " ajouté dans les utilisateurs suivis"
-                except:
+                except Exception:
                     obj_recup_02 = " " + str(donneesFormulaire.followed_user) + \
-                                   " non sélectionnable, vérifier daans liste si déjà suivi"
-        # si l'utilisateur sélectionné pour le suivi est l'utilisateur connecté
-        else :
-            obj_recup_02 = "L'utilisateur" + str(donneesFormulaire.user) + " connecté ne peut se suivre lui-même"
+                                   " non sélectionnable, vérifier dans liste si déjà suivi"
 
-     # désabonnement avec click sur bouton "se désabonner" dans html
-     if request.method == 'POST' and "name_bouton_desabonner" in request.POST:
+            else:
+                obj_recup_02 = "L'utilisateur" + str(donneesFormulaire.user) + " connecté ne peut se suivre lui-même"
+
+# désabonnement avec click sur bouton "se désabonner" dans html
+    if request.method == 'POST' and "name_bouton_desabonner" in request.POST:
         form = UserFollowsForm(request.POST or None, request.FILES)
         instance = UserFollows.objects.get(user=request.user, followed_user=request.POST['name_bouton_desabonner'])
         obj_recup_02 = instance.followed_user
         instance.delete()
         obj_recup_02 = "utilisateur " + str(obj_recup_02) + " vient d'être désabonné"
-     return render(request, 'abonnement.html', {'form': form, 'obj_recup_01': obj_recup_01, 'obj_recup_02': obj_recup_02})
+    return render(request, 'abonnement.html', {'form': form,
+                                               'obj_recup_01': obj_recup_01, 'obj_recup_02': obj_recup_02})
+
 
 def indexAbonnement(request):
-    #recup de tous les objets de la base de données
+    # recup de tous les objets de la base de données
     form = UserFollowsForm(request.POST or None)
-
-    obj_recup_01 = "test objet recup 1"
-    obj_recup_01 = "test objet recup 1"
-    obj_recup_01 = Review.objects.filter(ticket__user_id=request.user.id)
-    #obj_recup_01 = Review.objects.all()
-
-    #obj_recup_01 = Ticket.objects.filter(Title='Title 21012023')
-    obj_recup_00 = Review.objects.all()
     obj_recup_01 = Review.objects.filter(user_id=2)
     obj_recup_02 = Review.objects.filter(rating=2)
     obj_recup_03 = Review.objects.values("rating")
-
     obj_recup_04 = UserFollows.objects.values("user")
     obj_recup_04 = obj_recup_04[4]
     obj_recup_05 = UserFollows.objects.values("user", "followed_user")
     obj_recup_06 = UserFollows.objects.values("followed_user")
     obj_recup_07 = UserFollows.objects.values("user", "followed_user")
-
     userFollow = UserFollows.objects.all()
 
     if form.is_valid():
@@ -180,6 +143,7 @@ def indexAbonnement(request):
                                                        'obj_recup_07': obj_recup_07[2],
                                                        'userFollow': userFollow[6],
                                                        })
+
 
 @login_required
 def viewsPosts(request):
@@ -215,10 +179,10 @@ def viewsPosts(request):
         listTicket_user.append(TicketInTicket_user)
 
     # Création de la liste des tickets ayant comme Review lui-même
-    listTicketReviewsEvenUser=[]
+    listTicketReviewsEvenUser = []
     for i in reviews_user:
         if i.ticket.user == i.user:
-           listTicketReviewsEvenUser.append(i.ticket.id)
+            listTicketReviewsEvenUser.append(i.ticket.id)
 
     # CONSTRUCTION DE LA LISTE DES TICKETS QUI N'ONT PAS DE REVIEW (à partir des 2 listes précédentes)
     # on prend la liste de tous les tickets, et on supprime ceux qui se retrouvent dans review avec pop
@@ -227,7 +191,6 @@ def viewsPosts(request):
 
     # La 1ere boucle teste tous les tickets en partant du dernier de la liste jusqu'au ticket avec index = 0
     longListTicket = len(listTicketInTicket_user)
-    longListTicketx = len(listTicketInTicket_user)
     # pour tous les tickets en partant de la fin de la liste jusqu'au ticket [0]
     while longListTicket >= 1:
         indexTicketListe = longListTicket - 1
@@ -251,21 +214,19 @@ def viewsPosts(request):
     tickets_other_user = tickets_other_user_0.exclude(user=request.user)
 
     if request.method == 'POST' and "name_post_review_bouton_supprimer" in request.POST:
-        review = get_instance(request, models.Review, review_id)
-        return render(request, 'review_delete.html', context=context)
+        # review = get_instance(request, models.Review, review_id)
+        return render(request, 'review_delete.html')
 
     if request.method == 'POST' and "name_post_review_bouton_modifier" in request.POST:
-        review = get_instance(request, models.Review, review_id)
-        return render(request, 'review_update.html', context=context)
+        # review = get_instance(request, models.Review, review_id)
+        return render(request, 'review_update.html')
 
     # chain transforme les 2 dict en un, ce qui permettra d'utiliser une seule itération pour les 2 dans le HTML
     tickets_and_reviews = sorted(
         chain(tickets_user, reviews_user),
         key=lambda instance: instance.time_created,
         reverse=True)
-
     list_for_max_star = [1, 2, 3, 4, 5]
-
     context = {
         'reviews_user': reviews_user,
         'tickets_user': tickets_user,
@@ -277,9 +238,10 @@ def viewsPosts(request):
         'listTicketWithoutReviews_user': listTicketWithoutReviews_user,
         'listTicket_user': listTicket_user,
         'list_for_max_star': list_for_max_star,
-        'listTicketReviewsEvenUser':listTicketReviewsEvenUser,
+        'listTicketReviewsEvenUser': listTicketReviewsEvenUser,
     }
     return render(request, 'posts.html', context=context)
+
 
 @login_required
 def viewsFlux(request):
@@ -287,15 +249,15 @@ def viewsFlux(request):
     # récup de tous les Reviews de l'utilisateur et de tous les utilisateurs
     test = request.user
     reviews_user = Review.objects.filter(user=test)
-    #reviews_user = Review.objects.filter(user=request.user)
+    # reviews_user = Review.objects.filter(user=request.user)
     reviews_all_user = Review.objects.all()
-    list_reviews_user =[]
+    list_reviews_user = []
     # CREATION DE LA LISTE DES REVIEWS AUTRES UTILISATEURS
     # création liste review utilisateur
     for i in reviews_user:
         list_reviews_user.append(i.id)
 
-    list_reviews_all_user =[]
+    list_reviews_all_user = []
     # création liste review
     for i in reviews_all_user:
         list_reviews_all_user.append(i.id)
@@ -329,7 +291,7 @@ def viewsFlux(request):
                 try:
                     list_reviews_other_user.pop(indexReview)
                     break
-                except:
+                except Exception:
                     pass
             index2 += 1
         longListReview -= 1
@@ -345,17 +307,16 @@ def viewsFlux(request):
                 try:
                     list_ticket_other_user.pop(indexTicket)
                     break
-                except:
+                except Exception:
                     pass
+
             index2 += 1
         longListTicket -= 1
 
     # CREATION DE LA LISTE DES TICKETS AUTRES UTILISATEURS SANS REVIEW ENSUITE
     # TESTER TOUS LES TICKETS UTILISATEURS ET VERIFIER SI DANS REVIEWS
     list_ticket_other_user_whithout_review = [i for i in list_ticket_other_user]
-
     longListTicket_other_user = len(list_ticket_other_user)
-
     while longListTicket_other_user >= 0:
         indexTicket_other_user = longListTicket_other_user - 1
         index2 = 0
@@ -366,41 +327,32 @@ def viewsFlux(request):
                     break
                 index2 += 1
             longListTicket_other_user = longListTicket_other_user - 1
-
-    ticket_other_user_whithout_review =[]
+    ticket_other_user_whithout_review = []
     for i in list_ticket_other_user_whithout_review:
         for j in ticket_all_user:
             if i == j.id:
                 ticket_other_user_whithout_review.append(j)
-
     # récup de tous les tickets de l'utilisateur et de tous les utilisateurs
     tickets_user = Ticket.objects.filter(user=request.user)
     tickets_all_user = Ticket.objects.all()
-
     reviews_other_user_0 = Review.objects.all()
     reviews_other_user = reviews_other_user_0.exclude(user=request.user)
-
-
     Ticket_id = ticket_all_user
     userFollow = UserFollows.objects.filter(user=request.user)
-
     # liste des utilisateurs que je suis
-    listUserFollow=[]
+    listUserFollow = []
     for i in userFollow:
         listUserFollow.append(i.followed_user)
-
     # Créer une liste des tickets autre utilisateurs sans review suivis
     listTicketOtherUserFollowed = []
     listI = []
-    listJ=[]
+    listJ = []
     for i in ticket_other_user_whithout_review:
         for j in listUserFollow:
             if i.user == j:
                 listTicketOtherUserFollowed.append(j)
             listI.append(i.user)
             listJ.append(j)
-
-
     listTicketTwoReviews = []
     for i in reviews_all_user:
         nb = 0
@@ -409,31 +361,25 @@ def viewsFlux(request):
                 nb += 1
                 if nb > 1 and i.ticket.id not in listTicketTwoReviews:
                     listTicketTwoReviews.append(i.ticket.id)
-
     if request.method == 'POST' and "nameFluxCreatReviewTicketConnu" in request.POST:
         Ticket_id = ticket_all_user
         userFollow = UserFollows.objects.all()
-        context={
+        context = {
             'Ticket_id': Ticket_id,
             'listUserFollow': listUserFollow,
             'listTicketOtherUserFollowed': listTicketOtherUserFollowed,
         }
         return render(request, 'creatTicketReview.html', context=context)
-
-
     tickets_and_reviews = sorted(chain(tickets_all_user, reviews_all_user),
-        key=lambda instance: instance.time_created,
-        reverse=True)
-
+                                 key=lambda instance: instance.time_created, reverse=True)
     list_for_max_star = [1, 2, 3, 4, 5]
-
     context = {
         'tickets_and_reviews': tickets_and_reviews,
         'reviews_all_user': reviews_all_user,
         'reviews_user': reviews_user,
         'reviews_other_user_0': reviews_other_user_0,
         'reviews_other_user': reviews_other_user,
-        'listTicketOtherUserFollowed':listTicketOtherUserFollowed,
+        'listTicketOtherUserFollowed': listTicketOtherUserFollowed,
         'tickets_all_user': tickets_all_user,
         'tickets_user': tickets_user,
         'ticket_other_user_whithout_review': ticket_other_user_whithout_review,
@@ -449,12 +395,12 @@ def viewsFlux(request):
         'list_for_max_star': list_for_max_star,
         'listTicketTwoReviews': listTicketTwoReviews,
     }
-    return render(request, 'flux.html', context=context) # le formulaire est généré dans le modèle
+    return render(request, 'flux.html', context=context)
 
 
 @login_required
 def review_delete(request, id):
-    review = Review.objects.get(id= id)
+    review = Review.objects.get(id=id)
 
     if request.method == 'POST':
         review.delete()
@@ -467,28 +413,26 @@ def review_delete(request, id):
 def review_update(request, id):
     review = Review.objects.get(id=id)
     form = ReviewForm(instance=review)  # rempli le formulaire avec
-                                        # les valeurs existantes correspondant à l'enregistrement
+    # les valeurs existantes correspondant à l'enregistrement
     reviewTicket = review.ticket
     reviewRating = review.rating
     reviewHeadline = review.headline
     reviewBody = review.body
-    reviewRating_0=10
-    reviewRating_1=11
-    reviewRating_2=12
-    reviewRating_3=13
-    reviewRating_4=14
-    reviewRating_5=15
+    reviewRating_0 = 10
+    reviewRating_1 = 11
+    reviewRating_2 = 12
+    reviewRating_3 = 13
+    reviewRating_4 = 14
+    reviewRating_5 = 15
 
-    #form = ReviewForm(request.POST, instance=review)
+    # form = ReviewForm(request.POST, instance=review)
     if request.method == 'POST':
         form = ReviewForm(request.POST, instance=review)
         if form.is_valid():
-            form.save() # force_update=True
+            form.save()
             return redirect('posts')
         else:
             form = ReviewForm(instance=review)
-
-        #return render(request, 'review_update.html', {'form': form}) # le formulaire est généré dans le modèle
     context = {
         'form': form,
         'reviewTicket': reviewTicket,
@@ -502,37 +446,33 @@ def review_update(request, id):
         'reviewRating_4': reviewRating_4,
         'reviewRating_5': reviewRating_5,
     }
-    return render(request, 'review_update.html', context=context) # le formulaire est généré dans le modèle
+    return render(request, 'review_update.html', context=context)  # le formulaire est généré dans le modèle
+
 
 @login_required
 def ticket_delete(request, id):
-    ticket = Ticket.objects.get(id= id)
+    ticket = Ticket.objects.get(id=id)
 
     if request.method == 'POST':
         ticket.delete()
         return redirect('posts')
     return render(request, 'ticket_delete.html', {'ticket': ticket})
 
+
 @login_required
 def ticket_update(request, id):
     ticket = Ticket.objects.get(id=id)
-    form = TicketForm(instance=ticket)  # rempli le formulaire avec
-                                        # les valeurs existantes correspondant à l'enregistrement
+    form = TicketForm(instance=ticket)  # rempli le formulaire
     ticketTitle = ticket.title
-
     if request.method == 'POST':
         form = TicketForm(request.POST, request.FILES, instance=ticket,)
         if form.is_valid():
-            form.save() # force_update=True
+            form.save()
             return redirect('posts')
         else:
             form = TicketForm(instance=ticket)
-
-        #return render(request, 'review_update.html', {'form': form}) # le formulaire est généré dans le modèle
     context = {
         'form': form,
         'ticketTitle': ticketTitle,
     }
-    return render(request, 'ticket_update.html', context=context) # le formulaire est généré dans le modèle
-
-
+    return render(request, 'ticket_update.html', context=context)  # le formulaire est généré dans le modèle
