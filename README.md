@@ -1,6 +1,6 @@
 # Projet 9 - Developpez une application Web en utilisant django
 
-Etapes à suivre pour la mise en place du projet
+Etapes à suivre pour la mise en place du projet et son utilisation.
 
 1 - Mise en place de l'environnement virtuel :
     - une fois le projet récupéré, aller sous le répertoire principal du projet "LR" sous l'invit de commande windows .
