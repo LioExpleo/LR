@@ -323,8 +323,10 @@ def viewsFlux(request):
         for j in list_reviews_all_user:
             if len(list_ticket_other_user) > 0:
                 if list_ticket_other_user[indexTicket_other_user] == list_ticket_all_user_all_review[index2]:
-                    list_ticket_other_user_whithout_review.pop(indexTicket_other_user)
-                    break
+                    try:
+                        list_ticket_other_user_whithout_review.pop(indexTicket_other_user)
+                    except:
+                        pass
                 index2 += 1
             longListTicket_other_user = longListTicket_other_user - 1
     ticket_other_user_whithout_review = []

@@ -1,14 +1,16 @@
 {% load static %}
 
 {% block content %}
-
+<div class="cl_extr_ticket">
 <form method="post" enctype="multipart/form-data">
-    <p class="cl_ticket_titre_page">Créer un ticket</p>
+    <p class="cl_ticket_titre_page"> <h2>Créer un ticket</h2></h2></p>
 
     <div class="cl_ticket_body_titre_descr">
     {% csrf_token %}
+
     {{ form.as_p }}
     </div>
     <button class="cl_extrTicket_btn_envoi" type="submit"> ENVOYER</button>
 </form>
+    </div>
 {% endblock %}

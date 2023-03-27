@@ -5,6 +5,7 @@
     color: purple;
 }
 
+
 body{
     font-family:'Times New Roman', Times, serif;
 }
@@ -95,39 +96,39 @@ height: 25px;
 border-radius: 7px
 }
 
-
-
 .cl_ticket_form_title{
-margin-left: 50px;
+margin-left: 258px;
+width: 55%;
 color: green;
 }
 
 .cl_ticket_form_description{
-margin-left: 92px;
+margin-left: 300px;
 color: green;
-width: 50%;
+width: 55%;
 }
 
 .cl_review_form_headline
 {
+width: 55%;
 text-color : purple;
-margin-left: 50px;
+margin-left: 258px;
 color: purple;
 }
 
 .cl_review_form_body{
-    margin-left: 92px;
+    margin-left: 300px;
     background-color: white;
-    width: 50%;
+    width: 55%;
     color: purple;
 }
 
 .cl_review_form_rating{
     display: flex;
-    width: 70%;
+    width: 65%;
     list-style-type: None;
     letter-spacing:6rem;
-    margin-left:calc( 15% - 25%);
+    margin-left:calc( 27% - 18%);
     justify-content: space-around;
     opacity: 1;
     color:  purple;
@@ -139,7 +140,7 @@ text-orientation: inherit;
 }
 
 .cl_ticketReview_bouton_envoyer{
-margin-left: 800px;
+margin-left: 66%;
 margin-top: 0px;
 width: 80px;
 height: 25px;
@@ -148,12 +149,16 @@ color :  blue;
 }
 
 .cl_ticket_update_btn{
-margin-left: 800px;
+margin-left: 1200px;
 margin-top: 0px;
 width: 80px;
 height: 25px;
 border-radius: 7px
 color :  blue;
+}
+
+.review_form_btn{
+margin-left: 1250px;
 }
 
 .cl_extrTicket_btn_envoi{
@@ -183,15 +188,13 @@ color :  red;
 }
 
 .cl_ticket_update_btn{
-margin-left: 800px;
+margin-left: 65%;
 margin-top: 0px;
 width: 80px;
 height: 25px;
 border-radius: 7px;
 color :  blue;
 }
-
-
 
 .idAbonnTitre1, .idAbonnTitre2, .idAbonnTitre3{
 text-align: center;
@@ -246,6 +249,40 @@ border: 1px solid black;
 padding: 3px;
 }
 
+.cl_creatTicketReview_titre1{
+position:relative;
+left:42%
+}
+
+.cl_creatTicketReview_titre2{
+position:relative;
+left:42%
+}
+
+.cl_creatTicketReview_ticket{
+position:relative;
+left:10%
+}
+
+.cl_creatTicketReview_review{
+position:relative;
+left:10%
+}
+
+
+.cl_extr_ticket{
+margin: auto;
+}
+
+.cl_extrTicket_btn_envoi{
+position:relative;
+right:0
+}
+
+.cl_extr_review{
+margin: auto;
+}
+
 
 .cl_ticket_titre{
 margin: auto;
@@ -253,7 +290,6 @@ text-align: center;
 position:relative;
 top:90
 }
-
 
 .cl_ticket_description{
 margin: center;
@@ -277,6 +313,19 @@ position:relative;
 left:70%;
 }
 
+.cl_ticket_delete_a{
+position:relative;
+left:30%
+}
+
+.cl_review_delete_a{
+position:relative;
+left:30%
+}
+
+.cl_posts_div{
+ margin: 0 auto;
+}
 .cl_posts_divP1{position: relative; top: 15px; left: 0px; right: 0px; width: 200px; border: 4px solid purple;
 text-align: left; width:950px;height:925px; padding-top:0px; padding-right:80px; padding-bottom:0px; padding-left:0px
 }
@@ -303,6 +352,11 @@ text-align: left; width:800px;height:560px; padding-top:0px; padding-right:0px; 
 border: 1px solid black; border-radius: 5px; padding: 0px 50px 5px
 }
 
+
+.cl_flux_div{
+ margin: 0 auto;
+}
+
 .cl_flux_divP1{
 position: relative; top: 15px; left: 0px; right: 0px; width: 200px; border: 4px solid purple; text-align: left;
 width:950px;height:780px; padding-top:0px; padding-right:80px; padding-bottom:0px; padding-left:0px
@@ -316,17 +370,29 @@ text-align: left; width:950px;height:800px; padding-top:0px; padding-right:80px;
 }
 .cl_flux_divP3{
 position: relative; top: 15px; left: 0px; right: 0px; width: 200px; border: 4px solid blue; text-align: left;
-width:950px;height:520px; padding-top:0px; padding-right:80px; padding-bottom:0px; padding-left:0px
+width:950px;height:550px; padding-top:0px; padding-right:80px; padding-bottom:0px; padding-left:0px
 }
+
 .cl_flux_btn_creat_ticket{
-border: 1px solid black; padding: 10px 50px 15px;width:150px; position: relative; top: 0px; left: 170px;
-right: 500px;border-radius: 5px;
+border: 1px solid black; padding: 10px 50px 15px;width:100px; position: static; top: 0px; left: 0px;
+right: 0px;border-radius: 5px; margin-right: 100px;
 }
 .cl_flux_btn_creat_review{
-border: 1px solid black; padding: 10px 50px 15px;width:150px;position: relative; top: 0px; left: 400px;
-right: 500px;border-radius: 5px;
+border: 1px solid black; padding: 10px 65px 15px;width:100px;position: static; top: 0px; left: 150px;
+right: 0px;border-radius: 5px;margin-left: 200px;
 }
+.cl_flux_btn_crit{
+ margin: 0 auto;
+}
+
 .cl_flux_btn_creat_review_answer{
 border: 1px solid black; padding: 0px 50px 5px;width:10px; position: relative; top: 0px; left: 5px;
 right: 500px;border-radius: 5px;
 }
+
+.cl_flux_img{
+position: static; top: 0px; ; right: 50px; left: 50px;
+right: 0px;
+}
+
+

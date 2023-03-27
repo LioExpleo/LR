@@ -2,6 +2,7 @@
 {% load static %}
 {% block content %}
 
+
 <form method="post" enctype="multipart/form-data">
 
     <div class="cl_flux_btn_crit">
@@ -9,9 +10,10 @@
     <span class="cl_flux_btn_creat_ticket" > <a href="{% url 'creatTicket' %}"> Demander une critique </a></span>
     <span class="cl_flux_btn_creat_review" > <a href="{% url 'creatTicketReview' %}">Créer une critique</a></span>
 <br>
-        </div>
+    </div>
     <br><br><br>
 
+<div class="cl_flux_div" >
 {% for instance in tickets_and_reviews %} <!-- boucle 1 pour tester tous les Reviews et tickets -->
     {% for instReview_user in reviews_user %} <!-- boucle pour tester tous les Reviews de l'utilisateur -->
         {% if instance.id == instReview_user.id %}
@@ -29,11 +31,13 @@
                      <p> ticket time_created: {{instReview_user.ticket.time_created}}</p>
                      <p> ticket titre : {{instReview_user.ticket.title}}</p>
                      <p> ticket description : {{instReview_user.ticket.description}}</p>
+                        <div class="cl_flux_img">
                      {% if instReview_user.ticket.image.url is not None %}
                         <img src="{{ instReview_user.ticket.image.url }}" width="200" height="300">
                      {% else %}
                         <img src="{% static 'img/NoImgOtherUser.gif' %}"  alt="pas d'image" width="200" height="300">
                      {% endif %}
+                        </div>
                     </div>
             </div>
                 {% endif %}
@@ -57,12 +61,13 @@
                      <p> ticket time_created : {{instReviews_other_user.ticket.time_created}}</p>
                      <p> ticket titre : {{instReviews_other_user.ticket.title}}</p>
                      <p> ticket description : {{instReviews_other_user.ticket.description}}</p>
-
+                     <div class="cl_flux_img" style="position: relative; left: 20px;">
                      {% if instReviews_other_user.ticket.image.url is not None %}
                         <img src="{{ instReviews_other_user.ticket.image.url }}" width="200" height="300">
                       {% else %}
                          <img src="{% static 'img/NoImgOtherUser.gif' %}"  alt="pas d'image" width="200" height="300">
                      {% endif %}
+                      </div>
                 <!-- si le créateur du ticket est le créateur de la critique, et que personne d'autre n'a
                 fait de critique du ticket -->
                 {% if instReviews_other_user.ticket.user == instReviews_other_user.user %}
@@ -90,11 +95,13 @@
                         <p> ticket time_created : {{inst_ticket_other_user_whithout_review.time_created}}</p>
                         <p> ticket titre : {{inst_ticket_other_user_whithout_review.title}}</p>
                         <p> ticket description : {{inst_ticket_other_user_whithout_review.description}}</p>
+                        <div class="cl_flux_img">
                         {% if inst_ticket_other_user_whithout_review.image.url is not None %}
                            <img src="{{ inst_ticket_other_user_whithout_review.image.url }}" width="200" height="300">
                         {% else %}
                            <img src="{% static 'img/NoImgOtherUser.gif' %}"  alt="pas d'image" width="200" height="300">
                         {% endif %}
+                        </div>
                         <br><br>
                         <span class="cl_flux_btn_creat_review_answer" >
                             <a href="{% url 'creatReview' inst_ticket_other_user_whithout_review.id %}"
@@ -104,5 +111,6 @@
              {% endif %}
     {% endfor %}
 {% endfor %}
+</div>
 </form>
 {% endblock content %}

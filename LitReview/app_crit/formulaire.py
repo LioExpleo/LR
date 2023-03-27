@@ -1,8 +1,8 @@
 from django.forms import ModelForm
 from .models import Ticket, Review, UserFollows
 from django import forms
+from django.db import models
 # from .forms_settings import ( CHOICES_REVIEW_FORM)
-
 
 class TicketForm(ModelForm):
     # Une class meta est une classe qui utilise une classe, cela va indiquer à django quelle classe utiliser
@@ -25,6 +25,10 @@ class TicketForm(ModelForm):
                         'class': 'cl_ticket_form_description'
                     }
                 ),
+                #'image': forms.Imagefield( attrs={
+                #        'class': 'cl_ticket_form_description'
+                #    }),
+
             }
 
 
@@ -51,7 +55,6 @@ class ReviewForm(ModelForm):
                 attrs={'class': 'cl_review_form_body'}
                 ),
         }
-
 
 class UserFollowsForm(ModelForm):
     # Une class meta est une classe qui utilise une classe, cela va indiquer à django quelle classe utiliser

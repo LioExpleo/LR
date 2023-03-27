@@ -1,17 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
+
 </form>
-    <h3>Critique template  CreatTicketReview</h3>
+<div class="cl_creatTicketReview_ticket"></div>
+    <a class="cl_creatTicketReview_titre1"><h3>Ticket</h3></a>
         <form method="post" enctype="multipart/form-data" id="creat_ticket">
         {% csrf_token %}
-        {{ ticket_form.as_p }}
+        <a class="cl_creatTicketReview_ticket">{{ ticket_form.as_p }}</a>
 
-    <h3>Critique</h3>
+     <a class="cl_creatTicketReview_titre2"><h3>Critique</h3></a>
         <form method="post" enctype="multipart/form-data" id="creat_review">
         {% csrf_token %}
-        {{ review_form.as_p }}
+        <a class="cl_creatTicketReview_review">{{ review_form.as_p }}</a>
 
         <button type="submit" class="cl_ticketReview_bouton_envoyer" name="name_ticketReview_bouton_envoyer" >Envoyer</button>
 
 </form>
+
 {% endblock %}

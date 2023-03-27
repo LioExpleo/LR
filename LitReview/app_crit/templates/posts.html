@@ -18,7 +18,7 @@
 
     <p> la liste listTicketWithoutReviews_user, indique quel tickets seront à afficher sans Review </p>
 -->
-
+<div class="cl_posts_div">
 {% for instance in tickets_and_reviews %} <!-- boucle 1 pour tester tous les Reviews et tickets -->
      {% for instReview in reviews_user %} <!-- boucle 1.1 pour tester tous les Reviews de l'utilisateur -->
         {% if instance.id == instReview.id %}
@@ -79,8 +79,8 @@
                              <img src="{% static 'img/NoImg.gif' %}"  alt="Etoile" width="200" height="300">
                         {% endif %}
                     <br><br><br>
-                     <span  class="cl_posts_update_review"> <a href="{% url 'review_update' instReview.id %}">[Modifier Review]</a></span>
-                     <span  class="cl_posts_delete_review" > <a href="{% url 'review_delete' instReview.id %}">[Supprimer Review]</a></span>
+                     <span  class="cl_posts_update_review"> <a href="{% url 'review_update' instReview.id %}">Modifier Review</a></span>
+                     <span  class="cl_posts_delete_review" > <a href="{% url 'review_delete' instReview.id %}">Supprimer Review</a></span>
                     <br>
                         </div>
             </div>
@@ -96,7 +96,7 @@
                 {% for instTicket in tickets_user %} <!-- boucle 1.2.1 pour tester tous les tickets user -->
                     {% if instance.id == instTicket.id %}
                         <div class="cl_posts_divP2">
-                        <p> <h4> Vous avez publié un ticket (sans sa propre critique) {{ instTicket.id }}</h4>  </p>
+                        <p> <h4> Vous avez publié un ticket {{ instTicket.id }}</h4>  </p>
                         <p>{{ instTicket.time_created  }}</p>
                         <p> Titre {{ instTicket.title }}</p>
                         <p>{{ instTicket.description }}</p>
@@ -106,8 +106,8 @@
                              <img src="{% static 'img/NoImg.gif' %}"  alt="Etoile" width="200" height="320">
                         {% endif %}
                         <br><br>
-                        <span  class="cl_posts_update_ticket" > <a href="{% url 'ticket_update' instTicket.id %}">[Modifier ticket]</a></span>
-                        <span   class="cl_posts_delete_ticket"> <a href="{% url 'ticket_delete' instTicket.id %}">[Supprimer ticket]</a></span>
+                        <span  class="cl_posts_update_ticket" > <a href="{% url 'ticket_update' instTicket.id %}">Modifier ticket</a></span>
+                        <span   class="cl_posts_delete_ticket"> <a href="{% url 'ticket_delete' instTicket.id %}">Supprimer ticket</a></span>
                         </div>
                         <br>
                     {% endif %}
@@ -123,8 +123,8 @@
                         <div class="cl_posts_divP3"  >
                              <p> <h4> listTicketReviewsEvenUser :  {{ listTicketReviewsEvenUser }}   </p>
                         <p>  listTicketWithoutReviews_user.user :  {{ listTicketWithoutReviews_user }} </p>
-                        <p> <h4> Vous avez publié un ticket (sans sa propre critique) {{ instTicket.id }}</h4>  </p>
                         <p> <h4> Vous avez publié un ticket {{ instTicket.id }}</h4>  </p>
+
                         <p>{{ instTicket.time_created  }}</p>
                         <p> Titre {{ instTicket.title }}</p>
                         <p>{{ instTicket.description }}</p>
@@ -134,8 +134,8 @@
                              <img src="{% static 'img/NoImg.gif' %}"  alt="Etoile" width="200" height="300">
                         {% endif %}
                         <br><br>
-                        <span  class="cl_posts_update_ticket">> <a href="{% url 'ticket_update' instTicket.id %}">[Modifier ticket]</a></span>
-                        <span  class="cl_posts_delete_ticket"> <a href="{% url 'ticket_delete' instTicket.id %}">[Supprimer ticket]</a></span>
+                        <span  class="cl_posts_update_ticket">> <a href="{% url 'ticket_update' instTicket.id %}">Modifier ticket</a></span>
+                        <span  class="cl_posts_delete_ticket"> <a href="{% url 'ticket_delete' instTicket.id %}">Supprimer ticket</a></span>
                         </div>
             {% endif %}
         {% endif %}
@@ -143,6 +143,7 @@
 
 {% endfor %}
 </form>
+</div>
 {% endblock %}
 
 
