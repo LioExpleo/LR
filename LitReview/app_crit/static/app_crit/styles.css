@@ -96,6 +96,8 @@ height: 25px;
 border-radius: 7px
 }
 
+
+
 .cl_ticket_form_title{
 margin-left: 258px;
 width: 55%;
@@ -107,6 +109,7 @@ margin-left: 300px;
 color: green;
 width: 55%;
 }
+
 
 .cl_review_form_headline
 {
@@ -269,7 +272,6 @@ position:relative;
 left:10%
 }
 
-
 .cl_extr_ticket{
 margin: auto;
 }
@@ -288,7 +290,8 @@ margin: auto;
 margin: auto;
 text-align: center;
 position:relative;
-top:90
+top:90;
+left: 25%;
 }
 
 .cl_ticket_description{
@@ -351,7 +354,20 @@ text-align: left; width:800px;height:560px; padding-top:0px; padding-right:0px; 
 .cl_posts_delete_review, .cl_posts_delete_ticket, .cl_posts_update_ticket, .cl_posts_update_review {
 border: 1px solid black; border-radius: 5px; padding: 0px 50px 5px
 }
-
+.cl_posts_update_ticket4{
+border: 1px solid black; border-radius: 5px; padding: 0px 50px 5px;
+position:relative;
+left:8%
+}
+.cl_posts_delete_ticket4{
+border: 1px solid black; border-radius: 5px; padding: 0px 50px 5px;
+position:relative;
+left:8%
+}
+.cl_ticket_titre_page{
+position:relative;
+left:45%
+}
 
 .cl_flux_div{
  margin: 0 auto;
@@ -396,3 +412,8 @@ right: 0px;
 }
 
 
+#id_Image{ /*id_ + nom du champs correspond à l'id' labels = {"title": "Titre", "description": "", "image": "Image"}
+dans le formulaire*/
+position:relative;
+left: 28%
+}
