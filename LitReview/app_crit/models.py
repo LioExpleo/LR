@@ -18,13 +18,13 @@ class Ticket(models.Model):
         image = Image.open(self.image)
         image.thumbnail(self.IMAGE_MAX_SIZE)  # thumbnail est la méthode qui permet de redimmensionner l'image
         # argumeents est largeur et hauteur en pixel max
-        image.save(self.image.path)  # sauvegarder en appelant la méthode save et en passant en argument
+        #image.save(self.image.path)  # sauvegarder en appelant la méthode save et en passant en argument
         # le chemin de l'image
 
     def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
         if self.image:
             self.resize_image()
+        super().save(*args, **kwargs)
 
 
 class Review(models.Model):
